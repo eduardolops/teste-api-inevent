@@ -5,7 +5,7 @@ class AuthApi
 
   protected $user, $pass;
 
-  function __construct($user, $pass)
+  function __construct($user = '', $pass = '')
   {
     $this->setUser($user);
     $this->setPass($pass);
@@ -40,6 +40,20 @@ class AuthApi
       return false;
 
     return $user;
+  }
+
+  public function createUser( $data )
+  {
+    if( !is_array($data) )
+      return false;
+
+    $create = $this->send( 'person.create', 'POST', $data );
+
+    if( !$create )
+      return false;
+
+    return $create;
+
   }
 
 
@@ -83,8 +97,4 @@ class AuthApi
     $postData = rtrim($postData, '&');
     return $postData;
   }
-
-
-
-    
 }

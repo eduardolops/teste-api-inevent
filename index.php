@@ -2,9 +2,18 @@
 
 require( './AuthApi.php' );
 
-$user = new AuthApi('recrutamento@inevent.us','recrutamento123');
-$auth = $user->auth();
+switch ($_GET['action']) {
+  case 'create':
+    $create = new AuthApi();
 
-echo "<pre>";
-print_r($auth);
+    $data = $_POST;
+    $response = $create->createUser( $data );
+    break;
+  default:
+    $user = new AuthApi('recrutamento@inevent.us','recrutamento123');
+    $response = $user->auth();
+    break;
+}
 
+echo '<pre>';
+print_r($response);
